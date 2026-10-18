@@ -1,5 +1,10 @@
 export type ModeKey = 'home' | 'software' | 'ml' | 'cloud' | 'llmops';
 
+export interface ProfileLink {
+  label: string;
+  href: string;
+}
+
 export interface WorkItem {
   tag: string;
   title: string;
@@ -53,6 +58,8 @@ export interface Theme {
   title: string;
   sub: string;
   chips: string[];
+  links?: ProfileLink[];
+  stack?: string[];
   swatch: string[];
   fx?: string;
 }
@@ -66,6 +73,15 @@ export interface PageTheme {
   body: string;
 }
 
+// Image shown on a content card: a cover (book), thumbnail (video), route map (run), or a generated cover.
+export interface Visual {
+  kind: 'book' | 'paper' | 'video' | 'route';
+  src?: string;
+  path?: string; // route: SVG path in a 160x90 box
+  title?: string;
+  caption?: string;
+}
+
 export interface PageNow {
   value: string;
   meta: string;
@@ -74,6 +90,8 @@ export interface PageNow {
   typeBg?: string;
   progressLabel?: string;
   progress?: string;
+  visual?: Visual;
+  href?: string;
 }
 
 export interface PageItem {
@@ -82,6 +100,8 @@ export interface PageItem {
   note: string;
   type?: string;
   typeBg?: string;
+  visual?: Visual;
+  href?: string;
 }
 
 export interface Page {
@@ -95,6 +115,7 @@ export interface Page {
   items: PageItem[];
   href?: string;
   linkLabel?: string;
+  links?: ProfileLink[]; // extra profile buttons (e.g. Strava, Garmin on Running)
   theme: PageTheme;
 }
 
@@ -112,3 +133,6 @@ export interface Category {
   summary: string;
   items: CatalogItem[];
 }
+
+// Live (DB / API) content merged over a page's tokens.json copy; theme and fx always stay from tokens.
+export type PageContent = Pick<Page, 'now' | 'items'> & Partial<Pick<Page, 'nowLabel'>>;

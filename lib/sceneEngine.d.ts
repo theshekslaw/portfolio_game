@@ -16,5 +16,5 @@ export default class SceneEngine {
   renderStill(): void;
   onMove(e: { clientX: number; clientY: number }): void;
   leave(): void;
-  tap(e: { clientX: number; clientY: number }): void;
+  tap(e: { clientX: number; clientY: number }): 'strike' | 'hat' | null;
 }

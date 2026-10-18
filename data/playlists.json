@@ -1,0 +1,273 @@
+{
+  "_note": "One playlist per view (form or page). Free Creative Commons tracks from Jamendo (found via Openverse), stored in public/music (re-encoded to 96 kbps; format changes are allowed by CC). Each needs its credit shown: title, artist, licence and source link, which the header does while it plays.",
+  "home": [
+    {
+      "file": "/music/home-1.mp3",
+      "title": "Samurai Attack",
+      "artist": "Grégoire Lourme",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1063175"
+    },
+    {
+      "file": "/music/home-2.mp3",
+      "title": "Rise of the Machines",
+      "artist": "Grégoire Lourme",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1103296"
+    }
+  ],
+  "software": [
+    {
+      "file": "/music/software-1.mp3",
+      "title": "Anti-gravity",
+      "artist": "Grégoire Lourme",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1103297"
+    },
+    {
+      "file": "/music/software-2.mp3",
+      "title": "Speed of Sound",
+      "artist": "Grégoire Lourme",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1103299"
+    }
+  ],
+  "ml": [
+    {
+      "file": "/music/ml-1.mp3",
+      "title": "toxic rain beauty",
+      "artist": "Bod",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1040709"
+    },
+    {
+      "file": "/music/ml-2.mp3",
+      "title": "Black Moon",
+      "artist": "Telematix",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1548903"
+    }
+  ],
+  "cloud": [
+    {
+      "file": "/music/cloud-1.mp3",
+      "title": "Flashback",
+      "artist": "Telematix",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1548904"
+    },
+    {
+      "file": "/music/cloud-2.mp3",
+      "title": "Keep Flying",
+      "artist": "Telematix",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1548906"
+    }
+  ],
+  "llmops": [
+    {
+      "file": "/music/llmops-1.mp3",
+      "title": "Trap",
+      "artist": "Jahzzar",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1501236"
+    },
+    {
+      "file": "/music/llmops-2.mp3",
+      "title": "I'm Trapped Here",
+      "artist": "starfrosch",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1818175"
+    }
+  ],
+  "fit:Boxing": [
+    {
+      "file": "/music/boxing-1.mp3",
+      "title": "Super Nova",
+      "artist": "Grégoire Lourme",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1103302"
+    },
+    {
+      "file": "/music/boxing-2.mp3",
+      "title": "Future Business",
+      "artist": "Marco Margna",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1128518"
+    }
+  ],
+  "fit:Running": [
+    {
+      "file": "/music/running-1.mp3",
+      "title": "The mind trap - Part 1",
+      "artist": "zero-project",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1710142"
+    },
+    {
+      "file": "/music/running-2.mp3",
+      "title": "Helike [Drum and Bass]",
+      "artist": "Hardcore Scm",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1406196"
+    }
+  ],
+  "fit:Gym": [
+    {
+      "file": "/music/gym-1.mp3",
+      "title": "Universe Rock (Instrumental Remake)",
+      "artist": "Forgenheim",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1087963"
+    },
+    {
+      "file": "/music/gym-2.mp3",
+      "title": "Free (rock instrumental)",
+      "artist": "Starfish Stories :: The Band",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/810513"
+    }
+  ],
+  "hob:Games": [
+    {
+      "file": "/music/games-1.mp3",
+      "title": "Future Chiptune",
+      "artist": "Andrey Avkhimovich",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1108723"
+    },
+    {
+      "file": "/music/games-2.mp3",
+      "title": "Byte Flow [Chiptune]",
+      "artist": "Hardcore Scm",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1412101"
+    }
+  ],
+  "hob:Reading": [
+    {
+      "file": "/music/reading-1.mp3",
+      "title": "Lofy",
+      "artist": "macouno",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/317391"
+    },
+    {
+      "file": "/music/reading-2.mp3",
+      "title": "LoFi Love",
+      "artist": "Ehma",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/2225566"
+    }
+  ],
+  "soc:LinkedIn": [
+    {
+      "file": "/music/linkedin-1.mp3",
+      "title": "Sounds Like This",
+      "artist": "R.W.B",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1523625"
+    },
+    {
+      "file": "/music/linkedin-2.mp3",
+      "title": "Dreams of the Future",
+      "artist": "MKHLSDRV",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/2172893"
+    }
+  ],
+  "soc:GitHub": [
+    {
+      "file": "/music/github-1.mp3",
+      "title": "Last Train To Nowhere",
+      "artist": "Telematix",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1548905"
+    },
+    {
+      "file": "/music/github-2.mp3",
+      "title": "Retro Futurism",
+      "artist": "Notorious Twins",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1367851"
+    }
+  ],
+  "soc:YouTube": [
+    {
+      "file": "/music/youtube-1.mp3",
+      "title": "Workout",
+      "artist": "BAMP",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1205623"
+    },
+    {
+      "file": "/music/youtube-2.mp3",
+      "title": "Future Basses",
+      "artist": "Reocken",
+      "license": "CC BY-ND 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/3.0/",
+      "source": "https://www.jamendo.com/track/1218091"
+    }
+  ],
+  "soc:Instagram": [
+    {
+      "file": "/music/instagram-1.mp3",
+      "title": "Future No Future",
+      "artist": "Bahia de Roses",
+      "license": "CC BY-ND 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nd/4.0/",
+      "source": "https://www.jamendo.com/track/1353219"
+    },
+    {
+      "file": "/music/instagram-2.mp3",
+      "title": "Lets go back to the rock",
+      "artist": "Outsider",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/123138"
+    }
+  ],
+  "soc:X / Twitter": [
+    {
+      "file": "/music/x-1.mp3",
+      "title": "AVen Tador - Chiptune",
+      "artist": "AVen Tador",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1833211"
+    },
+    {
+      "file": "/music/x-2.mp3",
+      "title": "Carpo [Chiptune DnB]",
+      "artist": "Hardcore Scm",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://www.jamendo.com/track/1348242"
+    }
+  ]
+}

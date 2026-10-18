@@ -28,3 +28,8 @@ dist-ssr
 out
 next-env.d.ts
 *.tsbuildinfo
+.neon
+
+# env files (any name starting with .env, incl. stray ones like ".env ")
+.env*
+!.env.example

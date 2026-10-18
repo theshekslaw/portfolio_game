@@ -1,0 +1,73 @@
+{
+  "home": [
+    { "text": "You have a right to your actions, but never to the fruits of your actions.", "by": "Bhagavad Gita 2.47" },
+    { "text": "Arise, awake, and stop not till the goal is reached.", "by": "Swami Vivekananda" },
+    { "text": "You have power over your mind, not outside events. Realize this, and you will find strength.", "by": "Marcus Aurelius" },
+    { "text": "We suffer more often in imagination than in reality.", "by": "Seneca" },
+    { "text": "Today is victory over yourself of yesterday.", "by": "Miyamoto Musashi" },
+    { "text": "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "by": "Rumi" },
+    { "text": "If you don't take risks, you can't create a future.", "by": "Monkey D. Luffy · One Piece" }
+  ],
+  "software": [
+    { "text": "First, solve the problem. Then, write the code.", "by": "John Johnson" },
+    { "text": "Talk is cheap. Show me the code.", "by": "Linus Torvalds" },
+    { "text": "Make it work, make it right, make it fast.", "by": "Kent Beck" },
+    { "text": "Simplicity is prerequisite for reliability.", "by": "Edsger W. Dijkstra" },
+    { "text": "Premature optimization is the root of all evil.", "by": "Donald Knuth" },
+    { "text": "Power isn't determined by your size, but the size of your heart and dreams.", "by": "Monkey D. Luffy · One Piece" }
+  ],
+  "ml": [
+    { "text": "All models are wrong, but some are useful.", "by": "George E. P. Box" },
+    { "text": "The best way to predict the future is to invent it.", "by": "Alan Kay" },
+    { "text": "A lesson without pain is meaningless.", "by": "Edward Elric · Fullmetal Alchemist: Brotherhood" },
+    { "text": "Hard work is worthless for those that don't believe in themselves.", "by": "Naruto Uzumaki · Naruto" },
+    { "text": "Believe in the me that believes in you!", "by": "Kamina · Gurren Lagann" }
+  ],
+  "cloud": [
+    { "text": "Everything fails, all the time.", "by": "Werner Vogels" },
+    { "text": "Hope is not a strategy.", "by": "Traditional SRE saying" },
+    { "text": "Simplicity is prerequisite for reliability.", "by": "Edsger W. Dijkstra" },
+    { "text": "Do every act of your life as though it were the very last act of your life.", "by": "Marcus Aurelius" }
+  ],
+  "llmops": [
+    { "text": "The best way to predict the future is to invent it.", "by": "Alan Kay" },
+    { "text": "If you win, you live. If you lose, you die. If you don't fight, you can't win!", "by": "Eren Yeager · Attack on Titan" },
+    { "text": "All models are wrong, but some are useful.", "by": "George E. P. Box" },
+    { "text": "I'll leave tomorrow's problems to tomorrow's me.", "by": "Saitama · One Punch Man" }
+  ],
+  "fit:Boxing": [
+    { "text": "Float like a butterfly, sting like a bee.", "by": "Muhammad Ali" },
+    { "text": "Don't quit. Suffer now and live the rest of your life as a champion.", "by": "Muhammad Ali" },
+    { "text": "Everybody has a plan until they get punched in the mouth.", "by": "Mike Tyson" },
+    { "text": "It ain't about how hard you hit. It's about how hard you can get hit and keep moving forward.", "by": "Rocky Balboa · Rocky Balboa (2006)" },
+    { "text": "Discipline is doing what you hate to do, but doing it like you love it.", "by": "Mike Tyson" }
+  ],
+  "fit:Running": [
+    { "text": "Pain is inevitable. Suffering is optional.", "by": "Haruki Murakami" },
+    { "text": "No human is limited.", "by": "Eliud Kipchoge" },
+    { "text": "Run when you can, walk if you have to, crawl if you must; just never give up.", "by": "Dean Karnazes" },
+    { "text": "When you give up, that's when the game ends.", "by": "Coach Anzai · Slam Dunk" }
+  ],
+  "fit:Gym": [
+    { "text": "Light weight, baby!", "by": "Ronnie Coleman" },
+    { "text": "100 push-ups, 100 sit-ups, 100 squats and a 10 km run. Every single day.", "by": "Saitama · One Punch Man" },
+    { "text": "Today is victory over yourself of yesterday.", "by": "Miyamoto Musashi" },
+    { "text": "Discipline is doing what you hate to do, but doing it like you love it.", "by": "Mike Tyson" }
+  ],
+  "hob:Games": [
+    { "text": "It's dangerous to go alone! Take this.", "by": "The Legend of Zelda" },
+    { "text": "With great power comes great responsibility.", "by": "Spider-Man" },
+    { "text": "A man chooses, a slave obeys.", "by": "Andrew Ryan · BioShock" },
+    { "text": "Ah shit, here we go again.", "by": "CJ · GTA: San Andreas" }
+  ],
+  "hob:Reading": [
+    { "text": "A reader lives a thousand lives before he dies. The man who never reads lives only one.", "by": "George R. R. Martin" },
+    { "text": "The more that you read, the more things you will know. The more that you learn, the more places you'll go.", "by": "Dr. Seuss" },
+    { "text": "If I have seen further, it is by standing on the shoulders of giants.", "by": "Isaac Newton" }
+  ],
+  "social": [
+    { "text": "Stay hungry. Stay foolish.", "by": "Steve Jobs, Stanford 2005 (from the Whole Earth Catalog)" },
+    { "text": "If you don't take risks, you can't create a future.", "by": "Monkey D. Luffy · One Piece" },
+    { "text": "When you give up, that's when the game ends.", "by": "Coach Anzai · Slam Dunk" }
+  ]
+}

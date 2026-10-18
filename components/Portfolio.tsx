@@ -3,13 +3,17 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react';
 import type SceneEngine from '@/lib/sceneEngine';
 import { catalog, pages, professions } from '@/lib/data';
-import type { Category, CatalogItem, ModeKey, Theme } from '@/lib/types';
+import type { Quote } from '@/lib/quotes';
+import type { Category, CatalogItem, ModeKey, PageContent, Theme } from '@/lib/types';
+import { sound } from '@/lib/sound';
+import MusicPlayer, { type NowPlaying } from './MusicPlayer';
 import SceneCanvas from './SceneCanvas';
 import Header from './Header';
 import Cassette, { type RingCat, type RingSub } from './Cassette';
 import Hero from './Hero';
 import ContentPage from './ContentPage';
 import HomeCards from './HomeCards';
+import WorkGrid from './WorkGrid';
 
 type Click = MouseEvent<HTMLElement>;
 
@@ -18,13 +22,24 @@ const pos = (ang: number, r: number) => ({
   y: (50 + Math.sin(ang) * r).toFixed(2) + '%',
 });
 
-export default function Portfolio({ startMode = 'home' }: { startMode?: ModeKey }) {
+interface Props {
+  startMode?: ModeKey;
+  // Live content (DB / GitHub / YouTube) keyed by page, merged over the tokens.json copy.
+  pageContent?: Record<string, PageContent>;
+  quotes?: Record<string, Quote>; // today's quote per view
+}
+
+export default function Portfolio({ startMode = 'home', pageContent, quotes }: Props) {
   const [mode, setMode] = useState<ModeKey | null>(null);
   const [page, setPage] = useState<string | null>(null);
   const [menu, setMenu] = useState<string | null>(null);
   const [cat, setCat] = useState<string | null>(null);
   const [god, setGod] = useState(false);
   const [toast] = useState('');
+  const [sfx, setSfx] = useState(false);
+  const [musicOn, setMusicOn] = useState(false);
+  const [nowPlaying, setNowPlaying] = useState<NowPlaying | null>(null);
+  const musicPref = useRef(false);
   const engineRef = useRef<SceneEngine | null>(null);
   const godTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -33,6 +48,27 @@ export default function Portfolio({ startMode = 'home' }: { startMode?: ModeKey 
     clearTimeout(godTimer.current);
     godTimer.current = setTimeout(() => setGod(true), 4000);
   }, []);
+
+  // Sound / music preferences are remembered per browser; audio itself only starts after a click (unlock).
+  useEffect(() => {
+    try {
+      setSfx(localStorage.getItem('shek:sfx') === '1');
+      musicPref.current = localStorage.getItem('shek:music') === '1';
+    } catch {}
+    // A remembered "music on" can only actually start on the visitor's first click.
+    const unlock = () => {
+      sound.unlock();
+      if (musicPref.current) setMusicOn(true); // a remembered "music on" starts on the first click
+    };
+    window.addEventListener('pointerdown', unlock);
+    return () => window.removeEventListener('pointerdown', unlock);
+  }, []);
+  useEffect(() => {
+    sound.sfx = sfx;
+    try {
+      localStorage.setItem('shek:sfx', sfx ? '1' : '0');
+    } catch {}
+  }, [sfx]);
 
   useEffect(() => {
     armGod();
@@ -56,13 +92,37 @@ export default function Portfolio({ startMode = 'home' }: { startMode?: ModeKey 
   const k: ModeKey = mode || startMode;
   const pageKey = page;
   const isPage = !!pageKey && k === 'home';
-  const pgRaw = isPage ? pages[pageKey] : null;
+  const pgRaw = isPage ? { ...pages[pageKey], ...pageContent?.[pageKey] } : null;
   const pageTheme = k === 'home' && pageKey && pages[pageKey] ? pages[pageKey].theme : null;
   const th: Theme = pageTheme
     ? { ...professions.home, ...pageTheme, head: '#FFFFFF', tabBg: 'rgba(0,0,0,0.5)', border2: 'rgba(255,255,255,0.3)' }
     : professions[k];
   const menuOpen = !!menu;
 
+  // SFX only in god mode: the power-up + boom when it lands (the music ducks under it), then click effects.
+  const cue = useRef(k as string);
+  cue.current = isPage ? 'home' : k;
+  useEffect(() => {
+    if (god) sound.god(cue.current);
+  }, [god]);
+  // Every form and every page has its own playlist; music switches as soon as a new view opens.
+  const musicView = isPage ? pageKey! : k;
+
+  // Applied inside the click itself: browsers only unlock audio / speech during a user gesture.
+  const toggleSfx = (e: Click) => {
+    e.stopPropagation();
+    sound.sfx = !sfx;
+    sound.unlock();
+    setSfx(!sfx);
+  };
+  const toggleMusic = (e: Click) => {
+    e.stopPropagation();
+    musicPref.current = !musicOn;
+    try {
+      localStorage.setItem('shek:music', musicOn ? '0' : '1');
+    } catch {}
+    setMusicOn(!musicOn);
+  };
   const openMenu = (e: Click) => { e.stopPropagation(); setMenu('root'); setCat(null); };
   const goHome = (e: Click) => { e.stopPropagation(); go({ mode: 'home', page: null }); };
   const closeMenu = (e: Click) => { e.stopPropagation(); setMenu(null); setCat(null); };
@@ -113,24 +173,32 @@ export default function Portfolio({ startMode = 'home' }: { startMode?: ModeKey 
     <div
       onMouseMove={(e) => engineRef.current?.onMove(e)}
       onMouseLeave={() => engineRef.current?.leave()}
-      onClick={(e) => engineRef.current?.tap(e)}
+      onClick={(e) => {
+        const fx = engineRef.current?.tap(e);
+        if (!god) return; // click sounds only in god mode
+        if (fx === 'strike') sound.strike();
+        else if (fx === 'hat') sound.don();
+      }}
       style={{ position: 'relative', width: '100%', minHeight: '100vh', background: th.bg, color: th.ink, fontFamily: th.body, overflow: 'hidden', boxSizing: 'border-box', transition: 'background-color .5s, color .5s' }}
     >
       <SceneCanvas engineRef={engineRef} startMode={startMode} mode={mode} page={page} god={god} menu={menu} />
       <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', boxSizing: 'border-box', padding: '28px clamp(20px, 4vw, 56px)', display: 'flex', flexDirection: 'column', gap: 40 }}>
-        <Header th={th} menuOpen={menuOpen} onOpen={openMenu} crumb={toast} />
+        <MusicPlayer on={musicOn} view={musicView} onTitle={setNowPlaying} />
+        <Header th={th} menuOpen={menuOpen} onOpen={openMenu} crumb={toast} sfx={sfx} music={musicOn} nowPlaying={nowPlaying} onSfx={toggleSfx} onMusic={toggleMusic} />
 
         {menuOpen && (
           <Cassette th={th} ringCats={ringCats} ringSubs={ringSubs} onBackdrop={stopTap} onClose={closeMenu} onHome={goHome} />
         )}
 
-        <main style={{ flex: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 48 }}>
+        {/* Profession and content views put the title at the top with their cards below; only Home stays vertically centred. */}
+        <main style={{ flex: 1, display: 'flex', flexWrap: 'wrap', alignItems: k === 'home' && !isPage ? 'center' : 'flex-start', alignContent: k === 'home' && !isPage ? 'normal' : 'flex-start', gap: 48 }}>
           {isPage && pgRaw ? (
-            <ContentPage th={th} pg={pgRaw} />
+            <ContentPage key={pageKey} th={th} pg={pgRaw} quote={quotes?.[pageKey!]} />
           ) : (
             <>
-              <Hero modeKey={k} th={th} headShadow={god ? th.godShadow : th.headShadow} />
+              <Hero modeKey={k} th={th} headShadow={god ? th.godShadow : th.headShadow} quote={quotes?.[k]} />
               {k === 'home' && <HomeCards th={th} cats={cats} />}
+              {k !== 'home' && !!th.work?.length && <WorkGrid th={th} work={th.work} />}
             </>
           )}
         </main>

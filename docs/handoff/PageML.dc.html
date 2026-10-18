@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Machine learning — Arcane Vortex page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&amp;family=Rubik:wght@400;500;700&amp;family=Rubik+Mono+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1A0A36}
+a{color:#F3ECFF}a:hover{color:#FFFFFF}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+.rv{opacity:0;transform:translateY(34px) scale(0.98);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-60px) skewX(-6deg);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.rv-l.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+.gauge{transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.in .gauge{transform:scaleX(1)}
+.glass{background:rgba(26,10,54,0.62);border:1px solid rgba(201,179,240,0.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.card{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 0 0 1px #E8DBFF,0 18px 60px rgba(120,70,220,0.45);border-color:#E8DBFF}
+.card:hover .arrow{transform:translate(4px,-4px)}
+.arrow{transition:transform .3s}
+.breathe{animation:breathe 4.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{text-shadow:0 0 16px rgba(201,179,240,0.55)}50%{text-shadow:0 0 34px rgba(232,219,255,0.95),0 0 70px rgba(138,91,214,0.6)}}
+.tab:hover{background:rgba(243,236,255,0.14)}
+@media (prefers-reduced-motion: reduce){.rv,.rv-l{opacity:1;transform:none;transition:none}.gauge{transform:none;transition:none}.breathe{animation:none}}
+</style>
+</helmet>
+<div ref="{{setRoot}}" onMouseMove="{{move}}" onMouseLeave="{{leave}}" style="position: relative; width: 100%; min-height: 100vh; background: #1A0A36; color: #F3ECFF; font-family: 'Rubik', system-ui, sans-serif; box-sizing: border-box">
+<canvas ref="{{setCanvas}}" aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none"></canvas>
+
+<div style="position: relative; z-index: 1; display: flex; flex-direction: column">
+
+<header style="position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px clamp(20px, 4vw, 56px); background: linear-gradient(rgba(26,10,54,0.85), rgba(26,10,54,0)); backdrop-filter: blur(6px)">
+<a href="Modes.dc.html" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; font-family: 'Rubik Glitch', sans-serif; font-size: 24px; color: #FFFFFF">
+<svg width="24" height="24" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 1 L15.5 10.5 L25 13 L15.5 15.5 L13 25 L10.5 15.5 L1 13 L10.5 10.5 Z" fill="currentColor"></path></svg>
+SHEK
+</a>
+<nav aria-label="Domains" style="display: flex; flex-wrap: wrap; gap: 6px">
+<a href="Modes.dc.html" class="tab" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid rgba(243,236,255,0.35); border-radius: 999px; text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase">Software</a>
+<a href="#top" aria-current="page" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid #F3ECFF; border-radius: 999px; background: #F3ECFF; color: #2A1352; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase">ML</a>
+<a href="Modes.dc.html" class="tab" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid rgba(243,236,255,0.35); border-radius: 999px; text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase">Cloud</a>
+<a href="Modes.dc.html" class="tab" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid rgba(243,236,255,0.35); border-radius: 999px; text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase">LLMOps</a>
+</nav>
+<button aria-pressed="{{godPressed}}" onClick="{{toggleGod}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 6px; border: 1px solid rgba(243,236,255,0.35); border-radius: 999px; background: rgba(26,10,54,0.5); color: #F3ECFF; font-family: 'Rubik', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase">
+<span aria-hidden="true" style="position: relative; width: 48px; height: 28px; border-radius: 999px; background: {{godTrack}}; transition: background .3s">
+<span style="position: absolute; top: 3px; left: {{godKnob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; transition: left .3s"></span>
+</span>
+God mode
+</button>
+</header>
+
+<section id="top" aria-label="Intro" style="min-height: 100vh; box-sizing: border-box; padding: 6vh clamp(20px, 4vw, 56px) 10vh; display: flex; flex-direction: column; justify-content: flex-end; gap: 28px">
+<span class="rv in" style="align-self: flex-start; padding: 8px 12px; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; background: rgba(255,255,255,0.1); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase">Mode 02 · Arcane Vortex {{godBadge}}</span>
+<h1 class="breathe" style="margin: 0; max-width: 1100px; font-family: 'Rubik Glitch', sans-serif; font-weight: 400; font-size: clamp(48px, 7vw, 112px); line-height: 0.96; color: #FFFFFF">Machine Learning Engineer</h1>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+<p style="margin: 0; max-width: 560px; font-size: 19px; line-height: 1.55; color: #E8DBFF">I train, evaluate and deploy models that hold up outside the notebook. [ONE LINE ON WHAT YOU FOCUS ON]</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="padding: 10px 14px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px; background: rgba(26,10,54,0.55); font-size: 13px; font-weight: 500">Model training</span>
+<span style="padding: 10px 14px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px; background: rgba(26,10,54,0.55); font-size: 13px; font-weight: 500">Evaluation</span>
+<span style="padding: 10px 14px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px; background: rgba(26,10,54,0.55); font-size: 13px; font-weight: 500">Feature pipelines</span>
+<span style="padding: 10px 14px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px; background: rgba(26,10,54,0.55); font-size: 13px; font-weight: 500">Deployment</span>
+</div>
+</div>
+<a href="#work" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: #D4C4F2">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"></path></svg>
+Enter the vortex
+</a>
+</section>
+
+<section id="work" aria-label="Selected work" style="box-sizing: border-box; padding: 10vh clamp(20px, 4vw, 56px); display: flex; flex-direction: column; gap: 36px">
+<div data-rv="l" class="rv-l" style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px">
+<h2 style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-weight: 400; font-size: clamp(32px, 4vw, 56px); color: #FFFFFF">Selected work</h2>
+<span style="font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #D4C4F2">04 spells cast</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px">
+<a href="#" data-rv="1" class="rv glass card d1" style="display: flex; flex-direction: column; gap: 18px; min-height: 300px; padding: 24px; border-radius: 18px; text-decoration: none; color: #F3ECFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D4C4F2">Spell 01 · [TYPE]</span>
+<svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+</div>
+<div aria-hidden="true" style="height: 120px; border-radius: 12px; background: radial-gradient(circle at 30% 50%, #C9B3F0, #7A4CC9 40%, #2A1352 80%)"></div>
+<h3 style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.1; color: #FFFFFF">[Project name]</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E8DBFF">[What it does and the result, one line.] · [Stack]</p>
+</a>
+<a href="#" data-rv="1" class="rv glass card d2" style="display: flex; flex-direction: column; gap: 18px; min-height: 300px; padding: 24px; border-radius: 18px; text-decoration: none; color: #F3ECFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D4C4F2">Spell 02 · [TYPE]</span>
+<svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+</div>
+<div aria-hidden="true" style="height: 120px; border-radius: 12px; background: radial-gradient(circle at 70% 40%, #E8DBFF, #8A5BD6 35%, #1A0A36 80%)"></div>
+<h3 style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.1; color: #FFFFFF">[Project name]</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E8DBFF">[What it does and the result, one line.] · [Stack]</p>
+</a>
+<a href="#" data-rv="1" class="rv glass card d3" style="display: flex; flex-direction: column; gap: 18px; min-height: 300px; padding: 24px; border-radius: 18px; text-decoration: none; color: #F3ECFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D4C4F2">Spell 03 · [TYPE]</span>
+<svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+</div>
+<div aria-hidden="true" style="height: 120px; border-radius: 12px; background: conic-gradient(from 90deg at 50% 50%, #2A1352, #7A4CC9, #C9B3F0, #2A1352)"></div>
+<h3 style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.1; color: #FFFFFF">[Project name]</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E8DBFF">[What it does and the result, one line.] · [Stack]</p>
+</a>
+<a href="#" data-rv="1" class="rv glass card d4" style="display: flex; flex-direction: column; gap: 18px; min-height: 300px; padding: 24px; border-radius: 18px; text-decoration: none; color: #F3ECFF">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D4C4F2">Spell 04 · [TYPE]</span>
+<svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+</div>
+<div aria-hidden="true" style="height: 120px; border-radius: 12px; background: linear-gradient(135deg, #1A0A36, #4B2593 50%, #C9B3F0)"></div>
+<h3 style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.1; color: #FFFFFF">[Project name]</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E8DBFF">[What it does and the result, one line.] · [Stack]</p>
+</a>
+</div>
+</section>
+
+<section id="about" aria-label="About and skills" style="box-sizing: border-box; padding: 10vh clamp(20px, 4vw, 56px); display: flex; flex-wrap: wrap; gap: 48px">
+<div data-rv="1" class="rv" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-weight: 400; font-size: clamp(32px, 4vw, 56px); color: #FFFFFF">About</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #E8DBFF">[Two or three sentences about you: how you got into ML, what kind of problems you like, how you work.]</p>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #E8DBFF">[One sentence connecting ML to your other domains: software, cloud, LLMOps.]</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+<span style="padding: 8px 12px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px">PyTorch</span>
+<span style="padding: 8px 12px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px">scikit-learn</span>
+<span style="padding: 8px 12px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px">Pandas</span>
+<span style="padding: 8px 12px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px">MLflow</span>
+<span style="padding: 8px 12px; border: 1px solid rgba(243,236,255,0.45); border-radius: 999px">[TOOL]</span>
+</div>
+</div>
+<div data-rv="1" class="rv glass d1" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: 28px; border-radius: 18px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h3 style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D4C4F2">Power levels</h3>
+<span style="font-size: 12px; color: #D4C4F2">mana gauge</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 15px"><span>Model training &amp; tuning</span><span style="color: #D4C4F2">[XX]%</span></div>
+<div aria-hidden="true" style="height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden"><div class="gauge" style="height: 100%; width: 88%; border-radius: 999px; background: linear-gradient(90deg, #7A4CC9, #E8DBFF)"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 15px"><span>Evaluation &amp; experiment tracking</span><span style="color: #D4C4F2">[XX]%</span></div>
+<div aria-hidden="true" style="height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden"><div class="gauge d1" style="height: 100%; width: 82%; border-radius: 999px; background: linear-gradient(90deg, #7A4CC9, #E8DBFF)"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 15px"><span>Data &amp; feature pipelines</span><span style="color: #D4C4F2">[XX]%</span></div>
+<div aria-hidden="true" style="height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden"><div class="gauge d2" style="height: 100%; width: 76%; border-radius: 999px; background: linear-gradient(90deg, #7A4CC9, #E8DBFF)"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 15px"><span>Serving &amp; monitoring</span><span style="color: #D4C4F2">[XX]%</span></div>
+<div aria-hidden="true" style="height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden"><div class="gauge d3" style="height: 100%; width: 70%; border-radius: 999px; background: linear-gradient(90deg, #7A4CC9, #E8DBFF)"></div></div>
+</div>
+</div>
+</section>
+
+<section id="experience" aria-label="Experience" style="box-sizing: border-box; padding: 10vh clamp(20px, 4vw, 56px); display: flex; flex-direction: column; gap: 36px">
+<h2 data-rv="l" class="rv-l" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-weight: 400; font-size: clamp(32px, 4vw, 56px); color: #FFFFFF">Arc history</h2>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; border-left: 2px solid rgba(201,179,240,0.5)">
+<li data-rv="1" class="rv" style="position: relative; padding: 0 0 36px 32px">
+<span aria-hidden="true" style="position: absolute; left: -9px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: #E8DBFF; box-shadow: 0 0 18px #C9B3F0"></span>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px"><strong style="font-size: 20px; color: #FFFFFF">[Role] · [Company]</strong><span style="font-size: 13px; color: #D4C4F2">[YEAR] — Present</span></div>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.55; color: #E8DBFF">[One or two lines on what you owned and what changed because of it.]</p>
+</li>
+<li data-rv="1" class="rv d1" style="position: relative; padding: 0 0 36px 32px">
+<span aria-hidden="true" style="position: absolute; left: -9px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: #8A5BD6"></span>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px"><strong style="font-size: 20px; color: #FFFFFF">[Role] · [Company]</strong><span style="font-size: 13px; color: #D4C4F2">[YEAR] — [YEAR]</span></div>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.55; color: #E8DBFF">[One or two lines on what you owned and what changed because of it.]</p>
+</li>
+<li data-rv="1" class="rv d2" style="position: relative; padding: 0 0 0 32px">
+<span aria-hidden="true" style="position: absolute; left: -9px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: #4B2593; border: 2px solid #8A5BD6"></span>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px"><strong style="font-size: 20px; color: #FFFFFF">[Degree or first role] · [Place]</strong><span style="font-size: 13px; color: #D4C4F2">[YEAR]</span></div>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.55; color: #E8DBFF">[Where it started.]</p>
+</li>
+</ol>
+</section>
+
+<section id="contact" aria-label="Contact" style="box-sizing: border-box; padding: 12vh clamp(20px, 4vw, 56px) 8vh; display: flex; flex-direction: column; gap: 28px; align-items: flex-start">
+<h2 data-rv="1" class="rv" style="margin: 0; font-family: 'Rubik Glitch', sans-serif; font-weight: 400; font-size: clamp(44px, 7vw, 120px); line-height: 0.95; color: #FFFFFF">Summon me.</h2>
+<p data-rv="1" class="rv d1" style="margin: 0; max-width: 520px; font-size: 18px; line-height: 1.6; color: #E8DBFF">Open to [ROLE TYPE] in machine learning. The fastest way to reach me is email.</p>
+<div data-rv="1" class="rv d2" style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="mailto:hello@example.com" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; border-radius: 999px; background: #F3ECFF; color: #2A1352; text-decoration: none; font-weight: 700; font-size: 15px">[YOUR EMAIL]</a>
+<a href="https://github.com" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 22px; border: 1px solid rgba(243,236,255,0.5); border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px">GitHub</a>
+<a href="https://linkedin.com" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 22px; border: 1px solid rgba(243,236,255,0.5); border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px">LinkedIn</a>
+</div>
+<footer style="width: 100%; margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(201,179,240,0.3); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: #D4C4F2">
+<span>Shek · Software · ML · Cloud · LLMOps</span>
+<a href="Modes.dc.html" style="color: #D4C4F2">Change form</a>
+</footer>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"god":{"editor":"boolean","default":false,"section":"Mode"},"intensity":{"editor":"range","min":0.4,"max":1.6,"step":0.1,"default":1,"section":"Mode"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  state = { god: null };
+  isGod() { const g = this.state && this.state.god; return g === null || g === undefined ? !!this.props.god : g; }
+  componentDidUpdate(pp, ps) {
+    const pg = ps && ps.god !== null && ps.god !== undefined ? ps.god : !!pp.god;
+    if (pg !== this.isGod() && this.isGod()) { this.shakeStart = performance.now(); this.born = performance.now(); }
+  }
+  componentWillUnmount() { this.dead = true; if (this.raf) cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect(); }
+
+  setRoot(el) {
+    if (!el || this.root === el) return; this.root = el;
+    if (!('IntersectionObserver' in window)) { el.querySelectorAll('[data-rv]').forEach((n) => n.classList.add('in')); return; }
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); this.io.unobserve(e.target); } }); }, { threshold: 0.18 });
+    el.querySelectorAll('[data-rv]').forEach((n) => this.io.observe(n));
+  }
+  attach(el) {
+    if (!el || this.cv === el) return;
+    this.cv = el; this.ctx = el.getContext('2d');
+    this.mx = this.my = this.emx = this.emy = -1e4;
+    const n = 3200; this.vx = { r: new Float32Array(n), a: new Float32Array(n), n };
+    for (let i = 0; i < n; i++) { this.vx.r[i] = 0.04 + Math.random(); this.vx.a[i] = Math.random() * 6.283; }
+    this.bolts = []; this.lastBolt = 0; this.born = performance.now(); this.last = this.born;
+    this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!this.raf) {
+      const step = (now) => { if (this.dead) return; this.raf = requestAnimationFrame(step); this.frame(now); };
+      this.raf = requestAnimationFrame(step);
+    }
+  }
+  onMove(e) {
+    const el = this.cv; if (!el) return;
+    const r = el.getBoundingClientRect(); this.mx = e.clientX - r.left; this.my = e.clientY - r.top;
+  }
+  frame(now) {
+    const el = this.cv, ctx = this.ctx; if (!el || !ctx) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), W = el.clientWidth, H = el.clientHeight; if (!W || !H) return;
+    const bw = Math.round(W * dpr), bh = Math.round(H * dpr);
+    if (el.width !== bw || el.height !== bh) { el.width = bw; el.height = bh; }
+    let dt = Math.min(0.05, (now - this.last) / 1000); this.last = now; if (this.reduced) dt = 0;
+    if (this.mx < -1e3 || this.emx < -1e3) { this.emx = this.mx; this.emy = this.my; } else { this.emx += (this.mx - this.emx) * 0.08; this.emy += (this.my - this.emy) * 0.08; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (this.shakeStart && now - this.shakeStart < 450) { const k = 1 - (now - this.shakeStart) / 450; ctx.translate((Math.random() - 0.5) * 12 * k, (Math.random() - 0.5) * 12 * k); }
+    const god = this.isGod(), I = (this.props.intensity ?? 1) * (god ? 1.7 : 1);
+    const scrollY = (this.root && this.root.getBoundingClientRect) ? -this.root.getBoundingClientRect().top : 0;
+    const drift = Math.min(1, scrollY / (H * 1.5));
+    let entry = this.reduced ? 1 : Math.min(1, (now - this.born) / 1400); entry = 1 - Math.pow(1 - entry, 3);
+    const cx = W * (0.68 - 0.25 * drift) + (this.emx > -1e3 ? (this.emx - W * 0.68) * 0.06 : 0);
+    const cy = H * (0.48 + 0.12 * drift) + (this.emy > -1e3 ? (this.emy - H * 0.48) * 0.06 : 0);
+    const Rm = Math.hypot(W, H) * 0.62 * (0.15 + 0.85 * entry);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(1, Rm));
+    g.addColorStop(0, god ? '#E8DBFF' : '#C9B3F0'); g.addColorStop(0.18, '#8A5BD6'); g.addColorStop(0.5, '#4B2593'); g.addColorStop(1, '#1A0A36');
+    ctx.globalAlpha = 1; ctx.fillStyle = '#1A0A36'; ctx.fillRect(-20, -20, W + 40, H + 40);
+    ctx.fillStyle = g; ctx.fillRect(-20, -20, W + 40, H + 40);
+    const V = this.vx, n = Math.min(V.n, Math.floor(V.n * (0.45 * I))), sp = (1 + (1 - entry) * 4) * I * (1 - drift * 0.4);
+    ctx.lineWidth = 1.3; ctx.lineCap = 'round';
+    for (let pass = 0; pass < 2; pass++) {
+      ctx.strokeStyle = pass ? 'rgba(255,255,255,0.55)' : 'rgba(201,179,240,0.4)'; ctx.beginPath();
+      for (let i = pass; i < n; i += 2) {
+        const r0 = V.r[i];
+        V.a[i] += dt * (0.18 + 0.7 / (r0 * 3 + 0.35)) * sp; V.r[i] -= dt * 0.025 * sp;
+        if (V.r[i] < 0.03) { V.r[i] = 1 + Math.random() * 0.1; V.a[i] = Math.random() * 6.283; }
+        const r = V.r[i] * Rm, a = V.a[i], len = 0.05 + 0.08 / (r0 + 0.2);
+        ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.86);
+        ctx.lineTo(cx + Math.cos(a - len) * r, cy + Math.sin(a - len) * r * 0.86);
+      }
+      ctx.stroke();
+    }
+    if (!this.reduced && now - this.lastBolt > (god ? 420 : 1500) / I) {
+      this.lastBolt = now; let r = Rm * 0.75, a = Math.random() * 6.283; const pts = [];
+      for (let k = 0; k < 16 && r > 30; k++) { pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.86]); r -= Rm * (0.03 + Math.random() * 0.05); a += (Math.random() - 0.5) * 0.35; }
+      this.bolts.push({ pts, born: now });
+    }
+    this.bolts = this.bolts.filter((b) => now - b.born < 280);
+    ctx.save(); ctx.shadowColor = '#E8DBFF'; ctx.shadowBlur = 14; ctx.strokeStyle = '#FFFFFF';
+    for (const b of this.bolts) { ctx.globalAlpha = 1 - (now - b.born) / 280; ctx.lineWidth = god ? 3 : 2; ctx.beginPath(); b.pts.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); }
+    ctx.restore();
+    if (entry < 1) { ctx.globalAlpha = (1 - entry) * 0.9; ctx.fillStyle = '#FFFFFF'; ctx.fillRect(-20, -20, W + 40, H + 40); }
+    ctx.globalAlpha = 0.35 + 0.35 * drift; ctx.fillStyle = '#1A0A36'; ctx.fillRect(-20, -20, W + 40, H + 40);
+    ctx.globalAlpha = 1;
+  }
+  renderVals() {
+    if (!this._attach) {
+      this._attach = (el) => this.attach(el); this._root = (el) => this.setRoot(el);
+      this._move = (e) => this.onMove(e); this._leave = () => { this.mx = this.my = -1e4; };
+      this._god = () => this.setState({ god: !this.isGod() });
+    }
+    const god = this.isGod();
+    return { setCanvas: this._attach, setRoot: this._root, move: this._move, leave: this._leave, toggleGod: this._god,
+      godPressed: god ? 'true' : 'false', godBadge: god ? '· Unleashed' : '', godTrack: god ? '#E8DBFF' : 'rgba(128,128,128,0.55)', godKnob: god ? '23px' : '3px' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body{margin:0;background:#070707}
+a{color:inherit}a:hover{opacity:0.8}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #FFD54A;outline-offset:3px}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.rise{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.rise2{animation:rise .6s .08s cubic-bezier(.2,.8,.2,1) both}
+.rise3{animation:rise .6s .16s cubic-bezier(.2,.8,.2,1) both}
+@keyframes spin{to{transform:rotate(360deg)}}
+.reel{animation:spin 40s linear infinite}
+.spin{transition:transform .5s}button:hover .spin{transform:rotate(90deg)}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+.hint{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(.4)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.pop{animation:pop .45s cubic-bezier(.2,.9,.2,1.2) both}
+.pop2{animation:pop .4s .08s cubic-bezier(.2,.9,.2,1.2) both}
+@media (max-width: 640px){.pop,.pop2{min-width:0!important;font-size:11px!important;padding:0 10px!important}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
